@@ -1,0 +1,109 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome to Wuragold Foundation Admin!</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #cce0cc 0%, #fff9e6 100%);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #2e4d2e;
+    }
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+      overflow: hidden;
+    }
+    .header {
+      background: linear-gradient(90deg, #006400 60%, #FFD700 100%);
+      padding: 32px 0 24px 0;
+      text-align: center;
+    }
+    .header h1 {
+      color: #fff;
+      font-size: 2.3rem;
+      margin: 0;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+    .logo {
+      width: 80px;
+      margin-bottom: 12px;
+    }
+    .content {
+      padding: 36px 32px 32px 32px;
+      text-align: center;
+    }
+    .content h2 {
+      color: #006400;
+      margin-bottom: 12px;
+      font-size: 1.5rem;
+    }
+    .content p {
+      color: #333;
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: linear-gradient(90deg, #006400 60%, #FFD700 100%);
+      color: #fff;
+      padding: 14px 36px;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-decoration: none;
+      margin-top: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      transition: background 0.3s;
+    }
+    .cta-btn:hover {
+      color: Black;
+    }
+    .footer {
+      background: #006400;
+      color: #fefefe;
+      text-align: center;
+      padding: 18px 0;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+    }
+    .footer span {
+      color: #FFD700;
+      font-weight: 600;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 0; }
+      .content { padding: 24px 10px 24px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <!-- Optional: Add Wuragold Foundation logo -->
+      <!-- <img src="https://yourdomain.com/wuragold-logo.png" alt="Wuragold Foundation Logo" class="logo" /> -->
+      <h1>Welcome to Wuragold Foundation</h1>
+    </div>
+    <div class="content">
+      <h2>Hello {{firstName}},</h2>
+      <p>
+        Congratulations! 🎉 You’ve been added as an <b>Administrator</b> on the <b>Wuragold Foundation</b> platform.<br><br>
+        As an admin, you now have the privilege to manage initiatives, oversee projects, and support the mission of empowering communities through Wuragold’s impactful programs.  
+      </p>
+      <a href="{{ctaUrl}}" class="cta-btn">Go to Admin Dashboard</a>
+    </div>
+    <div class="footer">
+      &copy; {{year}} Wuragold Foundation. All rights reserved.<br>
+      <span>Building Hope, Spreading Gold</span>
+    </div>
+  </div>
+</body>
+</html>
