@@ -11,7 +11,6 @@ const createEvent = async (req, res, next) => {
       eventDate,
       eventTime,
       venue,
-      images,
       aboutEvent,
       objectives,
       speakers,
@@ -24,7 +23,6 @@ const createEvent = async (req, res, next) => {
       !eventDate ||
       !eventTime ||
       !venue ||
-      !images ||
       !aboutEvent ||
       !objectives ||
       !speakers ||
@@ -33,7 +31,23 @@ const createEvent = async (req, res, next) => {
       return next(new AppError("All fields are required", 400));
     }
 
-    const createdBy = req.user._id; 
+    // Upload images to Cloudinary
+    const imageUrls = [];
+    if (req.files && req.files.length > 0) {
+      const { dataUri } = require("../utils/multer");
+      const { uploader } = require("../utils/cloudinary");
+      for (const file of req.files) {
+        const file64 = dataUri(file).content;
+        const result = await uploader.upload(file64, { folder: "events" });
+        imageUrls.push(result.secure_url);
+      }
+    }
+
+    if (imageUrls.length === 0) {
+      return next(new AppError("At least one image is required", 400));
+    }
+
+    const createdBy = req.user._id;
 
     const event = await Event.create({
       title,
@@ -41,7 +55,7 @@ const createEvent = async (req, res, next) => {
       eventDate,
       eventTime,
       venue,
-      images,
+      images: imageUrls,
       aboutEvent,
       objectives,
       speakers,

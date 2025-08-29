@@ -1,26 +1,45 @@
+const { date } = require("joi");
 const Project = require("../models/project");
 const AppError = require("../utils/AppError");
+const { dataUri } = require("../utils/multer");
+const { uploader } = require("../utils/cloudinary");
+const { projectValidationSchema } = require("../validation/project");
+const { Readable } = require("stream");
+
+
+// const bufferToStream = (buffer) => {
+//   const stream = new Readable();
+//   stream.push(buffer);
+//   stream.push(null);
+//   return stream;
+// };
 
 
 const createProject = async (req, res, next) => {
   try {
-    const { title, description, images, objectives, startDate, endDate, status } = req.body;
-
-    if (!title || !description || !images || !objectives || !startDate || !endDate) {
-      return next(new AppError("All required fields must be provided", 400));
+    // ✅ Validate request body
+    const { error, value } = projectValidationSchema.validate(req.body, { abortEarly: false });
+    if (error) {
+      return next(new AppError(error.details.map(d => d.message).join(", "), 400));
     }
 
-    const createdBy = req.user._id; // from auth middleware
+    // ✅ Upload images to Cloudinary
+    const imageUrls = [];
+    if (req.files && req.files.length > 0) {
+      for (const file of req.files) {
+        const file64 = dataUri(file).content;
+        const result = await uploader.upload(file64, {
+          folder: "projects",
+        });
+        imageUrls.push(result.secure_url);
+      }
+    }
 
+    // ✅ Create project
     const project = await Project.create({
-      title,
-      description,
-      images,
-      objectives,
-      startDate,
-      endDate,
-      status,
-      createdBy,
+      ...value,                // use validated data from Joi
+      images: imageUrls,
+      createdBy: req.user._id,
     });
 
     res.status(201).json({
@@ -32,9 +51,6 @@ const createProject = async (req, res, next) => {
     next(error);
   }
 };
-
-
-
 
 const getAllProjects = async (req, res, next) => {
   try {

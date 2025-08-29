@@ -4,14 +4,28 @@ const AppError = require("../utils/AppError");
 
 const createBlog = async (req, res, next) => {
   try {
-    const { title, content, image } = req.body;
-    const createdBy = req.user._id; 
+    const { title, content } = req.body;
+    const createdBy = req.user._id;
 
-    if (!title || !content || !image) {
+    if (!title || !content) {
       return next(new AppError("All fields are required", 400));
     }
 
-    const blog = await Blog.create({ title, content, image, createdBy });
+    // Upload image to Cloudinary
+    let imageUrl = null;
+    if (req.files && req.files.length > 0) {
+      const { dataUri } = require("../utils/multer");
+      const { uploader } = require("../utils/cloudinary");
+      const file64 = dataUri(req.files[0]).content;
+      const result = await uploader.upload(file64, { folder: "blogs" });
+      imageUrl = result.secure_url;
+    }
+
+    if (!imageUrl) {
+      return next(new AppError("Image is required", 400));
+    }
+
+    const blog = await Blog.create({ title, content, image: imageUrl, createdBy });
 
     res.status(201).json({
       success: true,

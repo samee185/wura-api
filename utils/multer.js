@@ -1,6 +1,7 @@
 const multer = require("multer");
 const path = require("path");
 const DataUri = require("datauri/parser");
+const { log } = require("console");
 
 const dUri = new DataUri();
 
@@ -51,7 +52,9 @@ const dataUri = (file) =>
 
 const ensureMinImages = (req, res, next) => {
   if (!req.files || req.files.length < 1) {
-    console.log(req.file);
+    console.log("hiiiiii");
+    console.log(req.files);
+    
     
     return res.status(400).json({
       status: "fail",

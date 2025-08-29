@@ -14,15 +14,11 @@ const projectSchema = new mongoose.Schema({
         type: String,
         required: true
     }],
-    obejectives: [{
+    objectives: [{
         type: String,
         required: true
     }],
-    startDate: {
-        type: Date,
-        required: true
-    },
-    endDate: {
+    date: {
         type: Date,
         required: true
     },

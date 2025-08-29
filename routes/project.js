@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.route("/")
   .get(getAllProjects)
-  .post(protect,ensureMinImages, imageUploads, createProject);
+  .post(protect, imageUploads, createProject);
 
 router.route("/:id")
   .get(getProjectById)

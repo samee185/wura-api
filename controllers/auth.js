@@ -161,8 +161,8 @@ const createAdminUser = asyncHandler(async (req, res, next) => {
 
 // ========== ADMIN LOGIN ==========
 const logInAdmin = asyncHandler(async (req, res, next) => {
-  const validation = validateUserLogin(req.body);
-  if (validation?.error) throw new AppError(validation.error.message, 400);
+  // const validation = validateUserLogin(req.body);
+  // if (validation?.error) throw new AppError(validation.error.message, 400);
 
   const { email, password } = req.body;
   const admin = await Users.findOne({ email, role: "admin" }).select("+password");
