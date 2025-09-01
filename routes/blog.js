@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.route("/")
   .get(getAllBlogs)
-  .post(protect, ensureMinImages, imageUploads, createBlog);
+  .post(protect, imageUploads, createBlog);
 
 router.route("/:id")
   .get(getBlogById)

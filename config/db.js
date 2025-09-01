@@ -1,24 +1,20 @@
+// config/db.js
 const mongoose = require("mongoose");
-const mongoPass = process.env.MONGO_PASSWORD ;
-const mongoUrl = process.env.MONGO_URL.replace("<password>", mongoPass);
 
 const connectDB = async () => {
-    mongoose.connect(mongoUrl,
-//         {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// }
-    )
-    .then(()=>{
-        console.log("Database connected succesfully!");
-        
-    }) 
-    .catch((error)=>{
-        console.log("An error occurred while connected to the database", error);   
-        
-    })
-}
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URL.replace("<password>", process.env.MONGO_PASSWORD), {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 30000, // increase timeout
+    });
 
-
+    console.log(`✅ Database connected successfully: ${conn.connection.host}`);
+    return conn;
+  } catch (error) {
+    console.error("❌ An error occurred while connecting to the database:", error.message);
+    throw error;
+  }
+};
 
 module.exports = connectDB;
