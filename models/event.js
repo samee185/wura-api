@@ -33,9 +33,9 @@ const eventSchema = new mongoose.Schema({
         required: true,
     }],
     speakers: [{
-        name: { type: String, required: true }, 
-        bio: { type: String, required: true },
-        photo: { type: String, required: true }
+        name: { type: String,  }, 
+        bio: { type: String,  },
+        photo: { type: String,  }
     }],
     host: {
         type: String,
