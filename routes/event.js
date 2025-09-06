@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.route("/")
   .get(getAllEvents)
-  .post(protect, ensureMinImages, imageUploads, createEvent);
+  .post(protect,  imageUploads, createEvent);
 
 router.route("/:id")
   .get(getEventById)

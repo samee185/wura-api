@@ -20,7 +20,7 @@ const eventSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    images: [{
+    image: [{
         type: String,
         required: true,
     }],
@@ -30,7 +30,7 @@ const eventSchema = new mongoose.Schema({
     },
     objectives: [{
         type: String,
-        required: true,
+        // required: true,
     }],
     speakers: [{
         name: { type: String,  }, 
