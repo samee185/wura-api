@@ -20,13 +20,13 @@ const eventSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    image: [{
+    images: [{
         type: String,
         required: true,
     }],
     aboutEvent: {
         type: String,   
-        required: true,
+        // required: true,
     },
     objectives: [{
         type: String,
@@ -35,7 +35,6 @@ const eventSchema = new mongoose.Schema({
     speakers: [{
         name: { type: String,  }, 
         bio: { type: String,  },
-        photo: { type: String,  }
     }],
     host: {
         type: String,

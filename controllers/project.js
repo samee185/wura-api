@@ -18,10 +18,15 @@ const { Readable } = require("stream");
 const createProject = async (req, res, next) => {
   try {
     // ✅ Validate request body
+    console.log(req.body);
     const { error, value } = projectValidationSchema.validate(req.body, { abortEarly: false });
     if (error) {
       return next(new AppError(error.details.map(d => d.message).join(", "), 400));
     }
+    
+    console.log("hiiii");
+    
+    
 
     // ✅ Upload images to Cloudinary
     const imageUrls = [];

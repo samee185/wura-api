@@ -1,41 +1,22 @@
 const Event = require("../models/event");
 const AppError = require("../utils/AppError");
+const { dataUri } = require("../utils/multer");
+const { uploader } = require("../utils/cloudinary");
 
 
  
 const createEvent = async (req, res, next) => {
   try {
-    const {
-      title,
-      description,
-      eventDate,
-      eventTime,
-      venue,
-      aboutEvent,
-      objectives,
-      speakers,
-      host,
-    } = req.body;
-
-    if (
-      !title ||
-      !description ||
-      !eventDate ||
-      !eventTime ||
-      !venue ||
-      !aboutEvent ||
-      !objectives ||
-      !speakers ||
-      !host
-    ) {
-      return next(new AppError("All fields are required", 400));
+    // Joi validation
+    const { eventValidationSchema } = require("../validation/event");
+    const { error, value } = eventValidationSchema.validate(req.body, { abortEarly: false });
+    if (error) {
+      return next(new AppError(error.details.map(d => d.message).join(", "), 400));
     }
 
     // Upload images to Cloudinary
     const imageUrls = [];
     if (req.files && req.files.length > 0) {
-      const { dataUri } = require("../utils/multer");
-      const { uploader } = require("../utils/cloudinary");
       for (const file of req.files) {
         const file64 = dataUri(file).content;
         const result = await uploader.upload(file64, { folder: "events" });
@@ -50,16 +31,8 @@ const createEvent = async (req, res, next) => {
     const createdBy = req.user._id;
 
     const event = await Event.create({
-      title,
-      description,
-      eventDate,
-      eventTime,
-      venue,
+      ...value,
       images: imageUrls,
-      aboutEvent,
-      objectives,
-      speakers,
-      host,
       createdBy,
     });
 

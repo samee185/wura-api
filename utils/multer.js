@@ -27,7 +27,7 @@ const imageUploads = multer({
       )
     );
   },
-}).array("images", 1);
+}).array("images", 3);
 
 // 2. For CSV file uploads
 const csvStorage = multer.memoryStorage();
