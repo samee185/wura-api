@@ -9,7 +9,8 @@ const {
 const { protect } = require("../middlewares/auth");
 const { ensureMinImages, imageUploads } = require('../utils/multer');
 
-const router = express.Router();
+const router = express.Router()
+
 
 router.route("/")
   .get(getAllProjects)
