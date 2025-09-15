@@ -8,6 +8,8 @@ const { uploader } = require("../utils/cloudinary");
 const createEvent = async (req, res, next) => {
   try {
     // Joi validation
+    console.log(req.body);
+    
     const { eventValidationSchema } = require("../validation/event");
     const { error, value } = eventValidationSchema.validate(req.body, { abortEarly: false });
     if (error) {
@@ -23,6 +25,7 @@ const createEvent = async (req, res, next) => {
         imageUrls.push(result.secure_url);
       }
     }
+    const { title, description, date, time, venue, aboutEvent } = req.body;
 
     if (imageUrls.length === 0) {
       return next(new AppError("At least one image is required", 400));
@@ -31,8 +34,13 @@ const createEvent = async (req, res, next) => {
     const createdBy = req.user._id;
 
     const event = await Event.create({
-      ...value,
+      title,
+      description,
+      date,
+      time,
+      venue,
       images: imageUrls,
+      aboutEvent,
       createdBy,
     });
 

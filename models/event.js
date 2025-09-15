@@ -8,11 +8,11 @@ const eventSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    eventDate: {
+    date: {
         type: Date,
         required: true, 
     },
-    eventTime: {
+    time: {
         type: String,   
         required: true,
     },
@@ -26,18 +26,6 @@ const eventSchema = new mongoose.Schema({
     }],
     aboutEvent: {
         type: String,   
-        // required: true,
-    },
-    objectives: [{
-        type: String,
-        // required: true,
-    }],
-    speakers: [{
-        name: { type: String,  }, 
-        bio: { type: String,  },
-    }],
-    host: {
-        type: String,
         required: true,
     },
     createdBy: {

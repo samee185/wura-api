@@ -1,5 +1,7 @@
 const Blog = require("../models/blog");
 const AppError = require("../utils/AppError"); 
+const { dataUri } = require("../utils/multer");
+const { uploader } = require("../utils/cloudinary");
 
 
 const createBlog = async (req, res, next) => {
@@ -14,8 +16,6 @@ const createBlog = async (req, res, next) => {
     // Upload image to Cloudinary
     let imageUrl = null;
     if (req.files && req.files.length > 0) {
-      const { dataUri } = require("../utils/multer");
-      const { uploader } = require("../utils/cloudinary");
       const file64 = dataUri(req.files[0]).content;
       const result = await uploader.upload(file64, { folder: "blogs" });
       imageUrl = result.secure_url;
