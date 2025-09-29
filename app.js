@@ -7,6 +7,7 @@ const errorHandler = require('./middlewares/error');
 const { cloudinaryConfig } = require("./utils/cloudinary");
 
 const authRoutes = require('./routes/auth');
+const subscriberRoutes = require('./routes/subscriber');
 const blogRoutes = require('./routes/blog');
 const eventRoutes = require('./routes/event');
 const projectRoutes = require('./routes/project');
@@ -28,6 +29,7 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/blogs', blogRoutes);
 app.use('/api/v1/event', eventRoutes);
 app.use('/api/v1/project', projectRoutes);
+app.use('/api/v1/subscriber', subscriberRoutes);
 
 
 
